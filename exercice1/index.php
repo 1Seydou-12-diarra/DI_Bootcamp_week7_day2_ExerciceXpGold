@@ -1,7 +1,7 @@
 
 <?php
 
-// Check if the request method is POST
+//Vérifiez si la méthode de requête est POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
   // Get the form data
@@ -44,11 +44,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <!-- Submit button -->
   <input type="submit" value="Submit">
 </form>
-<!-- Display error message if any -->
+<!-- affichage du message d'erro -->
 <?php if (isset($error_message)): ?>
   <p > <?php echo $error_message; ?></p>
 <?php endif; ?>
-<!-- Display success message if any -->
+<!-- affichage du message de succes -->
 <?php if (isset($success_message)): ?>
   <p><?php echo $success_message; ?></p>
 <?php endif; ?>
