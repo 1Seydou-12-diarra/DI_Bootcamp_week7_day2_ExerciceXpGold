@@ -1,38 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="" method="post">
-        <label for="">Nom</label>
-        <input type="text" name="name"  required placeholder="entrer votre nom"><br><br>
-        <label for="">email</label>
-        <input type="text" name="email" requored placeholder="john.doe@example.com"><br><br>
-        <label for="">password</label>
-        <input type="password" name="password" required><br><br>
-        <button type="submit" name="submit">Submit</button>
-    </form>
-    <?php
-    if (isset($_POST['submit'])) {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $email = "john.doe@example.com";
 
-        if(!$name   &&  filter_var($email, FILTER_VALIDATE_EMAIL) && ctype_alnum($password) == true || strlen($password) < 8){
-            echo " vous êtes connecté!!!!";
-        }
-        else{
-          echo" error";
-        }
+<?php
 
-   
-      
-    } 
-    ?>
-</body>
-</html>
+// Check if the request method is POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+  // Get the form data
+  $name = $_POST["name"];
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+
+  // Validate the form data
+  if (empty($name)) {
+    // Set error message if name is empty
+    $error_message = "veuillez remplir ce champ";
+  } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    // Set error message if email is invalid
+    $error_message = "Adresse Email invalid";
+  } elseif (strlen($password) < 8) {
+    // Set error message if password length is less than 8 characters
+    $error_message = "veuillez entrer un Mot de pass de  8 cararctère";
+  } else {
+    // Set success message if all validation checks are passed
+    $success_message = " bravo vous ête connecté";
+  }
+}
+
+?>
+
+<!-- HTML form for user input -->
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+  <!-- Label and input for name -->
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required>
+  <br><br>
+  <!-- Label and input for email -->
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required><br><br>
+
+  <!-- Label and input for password -->
+<label for="password">Password:</label>
+<input type="password" id="password" name="password" required><br><br>
+
+  <!-- Submit button -->
+  <input type="submit" value="Submit">
+</form>
+<!-- Display error message if any -->
+<?php if (isset($error_message)): ?>
+  <p > <?php echo $error_message; ?></p>
+<?php endif; ?>
+<!-- Display success message if any -->
+<?php if (isset($success_message)): ?>
+  <p><?php echo $success_message; ?></p>
+<?php endif; ?>
